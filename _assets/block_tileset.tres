@@ -1,0 +1,22 @@
+[gd_resource type="TileSet" format=3 uid="uid://b4lp1qs8ral2"]
+
+[ext_resource type="Texture2D" uid="uid://cjlmurwqosu4x" path="res://_assets/sprites/block.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://djbk218ic1hya" path="res://_assets/sprites/stone.png" id="2"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1"]
+texture = ExtResource("1")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2"]
+texture = ExtResource("2")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/custom_data_0 = 0.6
+
+[resource]
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "dig_time"
+custom_data_layer_0/type = 3
+sources/0 = SubResource("TileSetAtlasSource_1")
+sources/1 = SubResource("TileSetAtlasSource_2")

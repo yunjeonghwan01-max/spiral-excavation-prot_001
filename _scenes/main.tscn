@@ -2,10 +2,18 @@
 
 [ext_resource type="Script" uid="uid://1v42i2u64m44" path="res://_scripts/main.tscn.gd" id="1_dmym1"]
 [ext_resource type="PackedScene" uid="uid://ccec0fumldw1y" path="res://_scenes/toolkit.tscn" id="2_x6rnu"]
+[ext_resource type="PackedScene" uid="uid://rql4r3lsra1w" path="res://_scenes/terrain.tscn" id="3_terrain"]
+[ext_resource type="PackedScene" path="res://_scenes/player.tscn" id="4_player"]
 
 [node name="main" type="Node2D" unique_id=722765371]
 script = ExtResource("1_dmym1")
 
 [node name="game" type="Node2D" parent="." unique_id=1636911038]
+
+[node name="terrain" parent="game" unique_id=1403892576 instance=ExtResource("3_terrain")]
+
+[node name="player" parent="game" unique_id=787193016 instance=ExtResource("4_player")]
+position = Vector2(48, -20)
+terrain_path = NodePath("../terrain")
 
 [node name="toolkit" parent="." unique_id=758752430 instance=ExtResource("2_x6rnu")]
