@@ -4,11 +4,18 @@ const SPEED := 100.0
 const JUMP_VELOCITY := -170.0
 const GRAVITY := 600.0
 
+const MAX_HP := 100
+const ENEMY_CONTACT_DAMAGE := 10
+const HIT_COOLDOWN := 1.0
+
 const Terrain := preload("res://_scripts/terrain.tscn.gd")
 
 @export var terrain_path: NodePath
 var terrain: Terrain
 var facing_dir := Vector2i.RIGHT
+
+var current_hp := MAX_HP
+var _hit_cooldown := 0.0
 
 var _is_digging := false
 var _dig_target: Vector2i
@@ -17,6 +24,7 @@ var _dig_progress := 0.0
 
 func _ready() -> void:
 	terrain = get_node(terrain_path)
+	add_to_group("player")
 
 
 func _physics_process(delta: float) -> void:
@@ -39,6 +47,25 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	_update_dig(delta)
+	_update_enemy_contact(delta)
+
+
+func _update_enemy_contact(delta: float) -> void:
+	_hit_cooldown = max(_hit_cooldown - delta, 0.0)
+
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+		if collider is Node and collider.is_in_group("enemy"):
+			_take_damage(ENEMY_CONTACT_DAMAGE)
+			break
+
+
+func _take_damage(amount: int) -> void:
+	if _hit_cooldown > 0.0:
+		return
+	current_hp = max(current_hp - amount, 0)
+	_hit_cooldown = HIT_COOLDOWN
 
 
 func _get_dig_direction() -> Vector2i:
